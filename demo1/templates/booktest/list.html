@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表页</title>
+</head>
+<body>
+<a href="/booktest/index/">首页</a>
+<h2>列表页</h2>
+<a href="/booktest/detail/">详情页1</a>
+<a href="/booktest/detail/">详情页2</a>
+<a href="/booktest/detail/">详情页3</a>
+
+<!--<h2>书籍列表：{{books}}</h2>-->
+<ul>
+    {% for book in books %}
+    <li>
+        <a href="/booktest/detail/{{book.id}}/">{{book.title}}</a>
+    </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

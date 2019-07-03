@@ -4,7 +4,9 @@ from django.conf.urls import url
 from .views import *
 urlpatterns=[
     # url('myurl/',myview)
+    # url(r'^index/$',index),
+    #
     url(r'^index/$',index),
     url(r'^list/$',list),
-    url(r'^detail/$',detail)
+    url(r'^detail/(\d+)/$',detail)
 ]
