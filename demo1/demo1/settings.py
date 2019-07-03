@@ -69,6 +69,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# 项目根路由
 ROOT_URLCONF = 'demo1.urls'
 
 TEMPLATES = [
@@ -98,6 +99,18 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    #
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME':'python04',
+    #     'USER':'root',
+    #     'PASSWORD':'1234',
+    #     # 远程连接
+    #     # 'HOST':'',
+    #     # 'PORT':3306
+    #
+    #
+    # }
 }
 
 
