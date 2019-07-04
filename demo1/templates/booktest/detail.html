@@ -6,7 +6,13 @@
 </head>
 <body>
 <h2>详情页</h2>
-<a href="/booktest/index/">首页</a>
+
+{#<a href="/index/">首页</a> #}
+
+<a href="{% url 'booktest:index' %}">首页</a>
+
+
+
 <!--<a href="/booktest/index/">列表页</a>-->
 <h2>当前书籍：{{book.title}}</h2>
 
@@ -16,13 +22,18 @@
     <ul>
         {% for hero in book.heroinfo_set.all %}
         <li>
-            {{hero.name}}---{{hero.content}}
+
+            {{hero.name}}---{{hero.content}}---<a href="{% url 'booktest:deletehero' hero.id %}">删除</a>
+
+
         </li>
         {% endfor %}
     </ul>
 {% else %}
     <h2>没有角色</h2>
+
 {% endif%}
+<a href="{% url 'booktest:addhero' book.id %}">添加</a>
 
 </body>
 </html>
