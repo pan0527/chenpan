@@ -10,7 +10,6 @@ from django.views.generic import View,TemplateView,ListView
 # def myview(request):
 #     return HttpResponse("这是自定义展示路由")index
 
-
 class indexView(View):
     # 重写request的get方法
     def get(self,request):
@@ -87,14 +86,17 @@ def addhero(request,id):
         content=request.POST.get("content")
         gender=request.POST.get("gender")
         gender1=request.POST.get("gender1")
+        # 管理器的实例需要类名直接调用
+        heroInfo.objects.addhero(name,content,book,gender,gender1)
         # 构造一个hero对象
-        hero=heroInfo()
-        hero.name=name
-        hero.content=content
-        hero.book=book
-        hero.gender=gender
-        hero.type=gender1
-        hero.save()
+        # hero = heroInfo()
+        # hero.objects.addhero(name,content,book,gender,gender1)
+        # hero.name = name
+        # hero.content = content
+        # hero.book = book
+        # hero.gender = gender
+        # hero.type = gender1
+        # hero.save()
         # return HttpResponse("添加成功")
         return redirect(reverse("booktest:detail",args=(id,)))
 
@@ -106,7 +108,7 @@ def deletehero(request,id):
     # return HttpResponse("删除成功")
     # return HttpResponseRedirect("/detail/"+str(bookid)+"/")
     # result=reverse("booktest:detail",args=(bookid,))
-    # print(result)
+    # print(result) #结果为/detail/1(bookid)/
     return redirect(reverse("booktest:detail",args=(bookid,)))
 
 
