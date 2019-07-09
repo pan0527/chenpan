@@ -2,7 +2,7 @@
 from django.shortcuts import render,reverse,redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import loader
-from .models import BookInfo,heroInfo
+from .models import BookInfo,heroInfo,Ads
 from django.views.generic import View,TemplateView,ListView
 
 # Create your views here.
@@ -37,7 +37,7 @@ def index(request):
     # 3.返回
     # return HttpResponse(result1)
     # return HttpResponse("这是首页 <a href='/booktest/list/'>跳转到列表页</a>" )
-    return render(request,"booktest/index.html",{"username":"tom"})
+    return render(request,"booktest/index.html",{"username":"tom","adsimg":Ads.objects.all})
 
 def list(request):
     # 1.获取模板
@@ -117,3 +117,16 @@ def deletehero(request,id):
 正常请求：一次请求响应一次
 重定向：发起一次请求302 在处理过程中再次发起请求 返回响应200
 """
+
+def addads(request):
+    if request.method == "GET":
+        return render(request,"booktest/uploadsads.html")
+    elif request.method=="POST":
+        ads=Ads()
+        ads.desc=request.POST.get("desc")
+        ads.img=request.FILES['uploading']
+        ads.save()
+        return HttpResponse("上传成功")
+
+
+

@@ -46,3 +46,8 @@ class Application(models.Model):
     name=models.CharField(max_length=10)
     h=models.ManyToManyField(Host)
 
+class Ads(models.Model):
+    desc=models.CharField(max_length=10)
+    img=models.ImageField(upload_to='Ads')
+    def __str__(self):
+        return self.desc

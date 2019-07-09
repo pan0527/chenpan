@@ -34,3 +34,5 @@ class heroInfoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(heroInfo,heroInfoAdmin)
+
+admin.site.register(Ads)

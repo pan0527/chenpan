@@ -27,4 +27,7 @@ urlpatterns=[
 
     url(r'^deletehero/(\d+)/$',deletehero,name="deletehero"),
 
+    url(r'^addads/$',addads,name="addads"),
+
+
 ]

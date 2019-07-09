@@ -6,6 +6,21 @@
 </head>
 <body>
     <div class="container">
+        {% if request.user and request.user.is_authenticated %}
+           <h6>当前用户为：{{ request.user }}</h6>
+            <a href="{% url 'polls:logout' %}">退出登录</a>
+        {% else %}
+            <h3>用户未登录</h3>
+
+        {% endif %}
+
+
+        <!--{% if username  %}-->
+            <!--<h6>当前用户为：{{ username }}</h6>-->
+            <!--<a href="{% url 'polls:logout' %}">退出登录</a>-->
+        <!--{% else %}-->
+            <!--<h6>未登录</h6>-->
+        <!--{% endif %}-->
         <h2>投票列表</h2>
         <ul>
             {% if questions %}
@@ -19,7 +34,6 @@
 
             {% endif %}
         </ul>
-
     </div>
 </body>
 </html>
