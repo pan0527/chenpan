@@ -1,3 +1,30 @@
+{% extends 'polls/base.html' %}
+
+{% block title %}
+    <title>首页</title>
+{% endblock %}
+
+
+{% block container %}
+    <h2>投票列表</h2>
+        <ul>
+            {% if questions %}
+                {% for q in questions %}
+                <ol><a href="{% url 'polls:detail' q.id %}">{{ q.desc }}</a></ol>
+                {% empty %}
+                    <li>问题列表为空</li>
+                {% endfor %}
+            {% else%}
+                <li>没有问题可以投票</li>
+
+            {% endif %}
+        </ul>
+
+{% endblock %}
+
+
+
+{% comment %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,3 +64,5 @@
     </div>
 </body>
 </html>
+
+{% endcomment %}

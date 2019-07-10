@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,reverse,render_to_response
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from .models import Question,Choices,PollsUser
-
+from .forms import *
 
 from django.contrib.auth import login as lgn ,logout as lgt,authenticate
 # Create your views here.
@@ -59,27 +59,50 @@ def result(request,id):
 
 def register(request):
     if request.method=="POST":
-        username=request.POST.get("username")
-        password = request.POST.get("password")
-        user=PollsUser.objects.create_user(username=username,password=password)
-        if user:
+        rm = RegisterForm(request.POST)
+        if rm.is_valid():
+            # 先返回一个user 此时没有保存数据库应为密码还没有加密
+            user=rm.save(commit=False)
+            # 对user用户设置密码 加密过得密码
+            user.set_password(rm.cleaned_data['password'])
+            # 保存数据库
+            user.save()
             return redirect(reverse("polls:login"))
         else:
-            return render(request,"polls/login.html",{"errors":"注册失败"})
+            lf = LoginForm()
+            rm = RegisterForm()
+            return render(request, 'polls/login.html', {"errors": "注册失败", "lf":lf,"rm":rm})
+
+        # username=request.POST.get("username")
+        # password = request.POST.get("password")
+        # user=PollsUser.objects.create_user(username=username,password=password)
+        # if user:
+        #     return redirect(reverse("polls:login",))
+        # else:
+        #     return render(request,"polls/login.html",{"errors":"注册失败"})
 
 def login(request):
     if request.method=="GET":
-       return render(request,"polls/login.html")
+        lf = LoginForm()
+        rm = RegisterForm()
+        return render(request,"polls/login.html",{"lf":lf,"rm":rm})
     elif request.method=="POST":
         #3.使用django自带的User
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        user=authenticate(request,username=username,password=password)
-        if user:
-            lgn(request,user)
-            return redirect(reverse("polls:index"))
-        else:
-            return render(request,"polls/login.html")
+        # username = request.POST.get("username")
+        # password = request.POST.get("password")
+        # 利用django自带表单类创建表单，获取表单数据
+        lf=LoginForm(request.POST)
+        if lf.is_valid():
+            username=lf.cleaned_data.get("username")
+            password=lf.cleaned_data.get("password")
+            user=authenticate(request,username=username,password=password)
+            if user:
+                lgn(request,user)
+                return redirect(reverse("polls:index"))
+            else:
+                lf = LoginForm()
+                rm = RegisterForm()
+                return render(request,"polls/login.html",{"errors":"登录失败","lf":lf,"rm":rm})
 
         # 检测用户名、密码是否对应
         # 1.使用cookie存贮
