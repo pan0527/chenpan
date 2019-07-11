@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from DjangoUeditor.models import UEditorField
 # Create your models here.
 
 #轮播图
@@ -26,7 +27,12 @@ class Article(models.Model):
     update_time=models.DateTimeField(auto_now=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
-    body=models.TextField()
+    views=models.IntegerField(default=0)
+    # body=models.TextField()
+    # 不能添加图片
+    # body=UEditorField()
+    # 添加图片，加参数
+    body = UEditorField(imagePath="articleimg/",width="100%")
     tags=models.ManyToManyField(Tag)
     def __str__(self):
         return self.title
