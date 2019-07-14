@@ -26,5 +26,7 @@ urlpatterns = [
     url('',include('blog.urls',namespace='blog')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
     url('ueditor/',include('DjangoUeditor.urls')),
+    url('search/',include('haystack.urls')),
+    path('', include('comment.urls', namespace='comment')),
 
 ]

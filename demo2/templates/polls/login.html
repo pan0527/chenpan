@@ -63,7 +63,14 @@
                 <div class="col-sm-5">
                     {{ lf.password }}
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="verify" class="col-sm-3 control-label">验证码</label>
+                <div class="col-sm-5">
+                    <img src="{% url 'polls:verify' %}" alt="" id="verifyimg"><input type="text" name="verify" id="verify" placeholder="请输入验证码">
 
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-5">
                     <button type="submit" class="btn btn-warning">登录</button>
@@ -72,7 +79,7 @@
         </form>
     </div>
 
-</div>
+
 
 
 <div role="tabpanel" class="tab-pane" id="register">
@@ -80,6 +87,9 @@
             {% csrf_token %}
         <div class="form-group">
             {{rm}}
+        </div>
+        <div class="form-group">
+            邮箱：<input type="email" name="email">
         </div>
         <div class="form-group">
             <div class="col-sm-offset-3 col-sm-5">
@@ -145,7 +155,17 @@
     <!--</form>-->
 
 </div>
+<script>
 
+    $("#verifyimg").click(function () {
+
+         console.log("----")
+         $(this).attr("src","/polls/verify/?t=" + new Date().getTime())
+    })
+
+
+</script>
 
 </body>
+
 </html>

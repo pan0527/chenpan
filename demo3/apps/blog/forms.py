@@ -1,5 +1,6 @@
 from  django import forms
 from .models import *
+from comment.models import Comment
 
 class ArticleForm(forms.ModelForm):
     class Meta:
@@ -12,7 +13,10 @@ class ArticleForm(forms.ModelForm):
             'title':"标题",
             'body':'内容',
         }
-
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comment
+        fields = ["name", "email","url","content"]
 
 
 

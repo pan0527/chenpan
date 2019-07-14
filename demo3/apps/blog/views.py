@@ -1,10 +1,17 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from .models import *
 from django.http import HttpResponse
 from django.views.static import serve
-from .forms import ArticleForm
+from .forms import ArticleForm,CommentForm
 from django.core.paginator import Paginator,Page
 # Create your views here.
+# 封装了一个方法
+def getpage(request,object_list,per_num):
+    pagenum = request.GET.get("page")
+    pagenum = 1 if not pagenum else pagenum
+    page = Paginator(object_list, per_num).get_page(pagenum)
+    return page
+
 
 def index(request):
     ads=Ads.objects.all()
@@ -26,14 +33,22 @@ def index(request):
     pagenum=request.GET.get("page")
     pagenum=1 if not pagenum else pagenum
     page=Paginator(articles,1).get_page(pagenum)
-    print(page)
-    return render(request,"blog/index.html",{"page":page})
+    # print(page)
+    return render(request,"blog/index.html",{"page":page,"ads":ads})
 
 def single(request,id):
     if request.method=="GET":
-        return render(request,"blog/single.html")
+        article=get_object_or_404(Article,pk=id)
+        cf=CommentForm()
+        return render(request,"blog/single.html",{"article":article,"cf":cf})
     elif request.method=="POST":
-        return render(reverse("blog:single"))
+        cf=CommentForm(request.POST)
+        comment=cf.save(commit=False)
+        article=get_object_or_404(Article,pk=id)
+        comment.article=article
+        comment.save()
+        return redirect(reverse("blog:single",args=(article.id,)))
+
 def addarticle(request):
     if request.method=="GET":
         af=ArticleForm()
@@ -47,4 +62,38 @@ def addarticle(request):
             article.save()
             return redirect(reverse("blog:index"))
         else:
-            return HttpResponse("添加失败")
+             return HttpResponse("添加失败")
+
+# 归档
+def file(request,year,month):
+    if request.method=="GET":
+        articles = Article.objects.filter(create_time__year=year, create_time__month=month)
+        pagenum=request.GET.get("page")
+        pagenum=1 if not pagenum else pagenum
+        page=Paginator(articles,1).get_page(pagenum)
+        return render(request,"blog/index.html",{'page':page})
+
+# 分类
+def category(request,id):
+    if request.method == "GET":
+        category = get_object_or_404(Category,pk=id)
+        articles = category.article_set.all()
+        pagenum = request.GET.get("page")
+        pagenum = 1 if not pagenum else pagenum
+        page = Paginator(articles, 1).get_page(pagenum)
+        return render(request,'blog/index.html',{"page":page})
+
+# 标签云
+def gettag(request,id):
+    if request.method == "GET":
+        tags= get_object_or_404(Tag,pk=id)
+        articles = tags.article_set.all()
+        pagenum = request.GET.get("page")
+        pagenum = 1 if not pagenum else pagenum
+        page = Paginator(articles, 1).get_page(pagenum)
+        return render(request,'blog/index.html',{"page":page})
+
+
+
+
+
