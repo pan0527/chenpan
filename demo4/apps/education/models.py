@@ -1,7 +1,15 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from DjangoUeditor.models import UEditorField
 # Create your models here.
+
+# 轮播图
+class Ads(models.Model):
+    img = models.ImageField(upload_to="Ads")
+    desc = models.CharField(max_length=20)
+    def __str__(self):
+        return self.desc
 # 用户表
 class Students(models.Model):
     username=models.CharField(max_length=10)
@@ -15,6 +23,7 @@ class Teachers(User):
     # 职业
     occupation=models.CharField(max_length=10)
     student=models.ManyToManyField(Students)
+    img = models.ImageField(upload_to="teacher",null=True)
 
 # 课程分类
 class CourseCategory(models.Model):
@@ -26,6 +35,7 @@ class CourseCategory(models.Model):
 class Course(models.Model):
     name=models.CharField(max_length=20)
     desc=models.CharField(max_length=200)
+    img = models.ImageField(upload_to="course",null=True)
     price=models.FloatField(default=0.0)
     content=models.TextField()
     type = models.CharField(max_length=10, choices=(("online", "线上"), ("underline", "线下")), default="online")
@@ -45,8 +55,6 @@ class CourseComment(models.Model):
     course=models.ForeignKey(Course, on_delete=models.CASCADE)
     def __str__(self):
         return self.title
-
-
 
 # blog部分
 # 分类
@@ -68,11 +76,11 @@ class Article(models.Model):
     category=models.ForeignKey(BlogCategory,on_delete=models.CASCADE)
     author=models.ForeignKey(Teachers,on_delete=models.CASCADE)
     views=models.IntegerField(default=0)
-    body=models.TextField()
+    # body=models.TextField()
     # 不能添加图片
     # body=UEditorField()
     # 添加图片，加参数
-    # body = UEditorField(imagePath="articleimg/",width="100%")
+    body = UEditorField(imagePath="articleimg/",width="100%")
     tags=models.ManyToManyField(BlogTag)
     def __str__(self):
         return self.title

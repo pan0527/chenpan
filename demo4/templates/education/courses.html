@@ -10,29 +10,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- favicon -->
-    <link rel="icon" href="images/favicon.png" sizes="32x32">
-    <link rel="icon" href="images/favicon-300x300.png" sizes="192x192">
-    <link rel="apple-touch-icon-precomposed" href="images/favicon-300x300.png">
+    <link rel="icon" href="/media/images/favicon.png" sizes="32x32">
+    <link rel="icon" href="/media/images/favicon-300x300.png" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="/media/images/favicon-300x300.png">
 
     <!-- Import Template Icons CSS Files -->
 
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/assets/css/simple-line-icons.css">
 
     <!-- Import Bootstrap CSS File -->
 
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css">
     
     <!-- Import External CSS Files -->
 
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/selectric.css">
+    <link rel="stylesheet" href="/static/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="/static/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="/static/assets/css/selectric.css">
     
     <!-- Import Template's CSS Files -->
 
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <link rel="stylesheet" href="/static/assets/css/style.css">
+    <link rel="stylesheet" href="/static/assets/css/responsive.css">
 
 
 </head>
@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="col-md-10">
                     <nav class="navbar navbar-expand-md">
-                        <a class="navbar-brand" href="index.html"><img src="images/logo.png" alt="Logo"></a>
+                        <a class="navbar-brand" href="index.html"><img src="/media/images/logo.png" alt="Logo"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
                         </button>
@@ -74,7 +74,7 @@
                                 <li class="nav-item menu-item-has-children dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Instructors</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="instructors.html">All Instructors</a>
+                                        <a class="dropdown-item" href="teacher.html">All Instructors</a>
                                         <a class="dropdown-item" href="instructor-single.html">Instructor Single</a>
                                     </div>
                                 </li>
@@ -134,7 +134,7 @@
                                     <div class="item media">
                                         <button class="btn close-btn"><i class="icons icon-close"></i></button>
                                         <div class="item-thumbnail">
-                                            <img src="images/shop/1.jpg" alt="Item Thimbnail">
+                                            <img src="/media/images/shop/1.jpg" alt="Item Thimbnail">
                                         </div><!-- /.item-thumbnail -->
                                         <div class="item-details media-body">
                                             <div class="rating"><input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/></div><!-- /.rating -->
@@ -149,7 +149,7 @@
                                     <div class="item media">
                                         <button class="btn close-btn"><i class="icons icon-close"></i></button>
                                         <div class="item-thumbnail">
-                                            <img src="images/shop/2.jpg" alt="Item Thimbnail">
+                                            <img src="/media/images/shop/2.jpg" alt="Item Thimbnail">
                                         </div><!-- /.item-thumbnail -->
                                         <div class="item-details media-body">
                                             <div class="rating"><input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/></div><!-- /.rating -->
@@ -187,7 +187,7 @@
 
 
 
-    <section class="page-name background-bg" data-image-src="images/breadcrumb.jpg">
+    <section class="page-name background-bg" data-image-src="/media/images/breadcrumb.jpg">
         <div class="overlay">
             <div class="section-padding">
                 <div class="container">
@@ -237,23 +237,23 @@
                                         <span class="grid"><i class="fa fa-th"></i></span>
                                         <span class="list"><i class="fa fa-list"></i></span>
                                     </div><!-- /.layout-switcher -->
-                                    <p>
-                                        Showing 12 of 17
-                                    </p>
                                 </div>
                             </div>
                         </div><!-- /.filters -->
 
+
                         <div class="course-items">
+
                             <div class="row">
+                                {% for course in page.object_list %}
                                 <div class="col-lg-4 col-md-6">
                                     <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/1.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
+                                        <div class="item-thumb"><img src="/media/{{ course.img }}" alt="Item Thumbnail"></div><!-- /.item-thumb -->
                                         <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">The Complete Digital Marketing Course - 12 Courses in 1</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
+                                            <h3 class="item-title"><a href="{% url 'education:coursesingle' course.id %}">{{ course.name }}</a></h3><!-- /.item-title -->
+                                            <span class="instructor"><a href="{% url 'education:teachersingle' course.teacher.id %}">{{ course.teacher }}</a></span><!-- /.instructor -->
                                             <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
+                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">{{ course.price }}</span></div><!-- /.course-price -->
                                                 <div class="rating float-right">
                                                     <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
                                                 </div><!-- /.rating -->
@@ -261,146 +261,26 @@
                                         </div><!-- /.item-details -->
                                     </div><!-- /.item -->
                                 </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/2.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">React 16 - The Complete Guide (incl. React Router 4 & Redux)</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/3.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">Become A Full Stack Web Developer - Beginner To Advanced</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/4.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">The Complete React Web Developer Course (with Redux)</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/5.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">MERN Stack Front To Back: Full Stack React, Redux & Node.js</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/6.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">Learn Blockchain By Building Your Own In JavaScript language</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/7.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">Modern JavaScript From The Beginning</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/8.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">HTML5, CSS3, Bootstrap Web Design for Beginners</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
-
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="item">
-                                        <div class="item-thumb"><img src="images/popular/9.jpg" alt="Item Thumbnail"></div><!-- /.item-thumb -->
-                                        <div class="item-details">
-                                            <h3 class="item-title"><a href="course-single-01.html">Apache Spark Streaming with Python and PySpark</a></h3><!-- /.item-title -->
-                                            <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                            <div class="details-bottom">
-                                                <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                                <div class="rating float-right">
-                                                    <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" value="4.5" data-fractions="5"/>
-                                                </div><!-- /.rating -->
-                                            </div><!-- /.details-bottom -->
-                                        </div><!-- /.item-details -->
-                                    </div><!-- /.item -->
-                                </div>
+                                {% endfor %}
                             </div><!-- /.row -->
 
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination">
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </li>
+                                    {% if page.has_previous %}
+                                            <li class="col-md-2"><a href="?page={{ page.previous_page_number }}">上一页</a></li>
+                                    {% endif %}
+
+                                    {% for i in page.paginator.page_range %}
+                                        {% if i == page.number %}
+                                            <li class="current col-md-1"><a href="?page={{i}}">{{i}}</a></li>
+                                        {% else %}
+                                            <li class="col-md-1"><a href="?page={{i}}">{{i}}</a></li>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                    {% if page.has_next %}
+                                        <li class="col-md-2"><a href="?page={{ page.next_page_number }}">下一页</a></li>
+                                    {% endif %}
                                 </ul>
                             </nav>
 
@@ -412,13 +292,11 @@
                             <div class="category-list">
                                 <ul>
                                     <li class="active"><a href="#">All Courses</a></li>
-                                    <li><a href="#">IT & Software</a></li>
-                                    <li><a href="#">Development</a></li>
-                                    <li><a href="#">Design</a></li>
-                                    <li><a href="#">Business</a></li>
-                                    <li><a href="#">Photography</a></li>
-                                    <li><a href="#">Marketing</a></li>
-                                    <li><a href="#">Arts & Music</a></li>
+                                    {% for i in coursescategory %}
+                                        <li><a href="#">{{i.title}}</a></li>
+                                    {% endfor %}
+
+
                                 </ul>
                             </div>
                         </aside><!-- /.sidebar -->
@@ -440,7 +318,7 @@
                         <div class="col-lg-3 col-md-6">
                             <div class="widget widget_about_us">
                                 <!-- <h4>Courseware</h4> -->
-                                <img class="footer-logo" src="images/logo2.png" alt="Site Logo">
+                                <img class="footer-logo" src="/media/images/logo2.png" alt="Site Logo">
                                 <div class="widget-details">
                                     <p>
                                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna 
@@ -480,7 +358,7 @@
                                 <h4>News</h4>
                                 <div class="widget-details">
                                     <article class="post type-post media">
-                                        <div class="entry-thumbnail float-left"><img src="images/footer/1.jpg" alt="Entry Thumbnail"></div><!-- /.entry-thumbnail -->
+                                        <div class="entry-thumbnail float-left"><img src="/media/images/footer/1.jpg" alt="Entry Thumbnail"></div><!-- /.entry-thumbnail -->
                                         <div class="entry-content media-body">
                                             <h3 class="entry-title"><a href="#">Guide to WordPress Custom Post Type</a></h3><!-- /.entry-thumbnail -->
                                             <div class="entry-meta"><span><i class="icon-bubble"></i> 23 Comments</span></div><!-- /.entry-meta -->
@@ -488,7 +366,7 @@
                                     </article><!-- /.post -->
 
                                     <article class="post type-post media">
-                                        <div class="entry-thumbnail float-left"><img src="images/footer/2.jpg" alt="Entry Thumbnail"></div><!-- /.entry-thumbnail -->
+                                        <div class="entry-thumbnail float-left"><img src="/media/images/footer/2.jpg" alt="Entry Thumbnail"></div><!-- /.entry-thumbnail -->
                                         <div class="entry-content media-body">
                                             <h3 class="entry-title"><a href="#">SEO friendly WordPress and Squarespace</a></h3><!-- /.entry-thumbnail -->
                                             <div class="entry-meta"><span><i class="icon-bubble"></i> 23 Comments</span></div><!-- /.entry-meta -->
@@ -496,7 +374,7 @@
                                     </article><!-- /.post -->
 
                                     <article class="post type-post media">
-                                        <div class="entry-thumbnail float-left"><img src="images/footer/3.jpg" alt="Entry Thumbnail"></div><!-- /.entry-thumbnail -->
+                                        <div class="entry-thumbnail float-left"><img src="/media/images/footer/3.jpg" alt="Entry Thumbnail"></div><!-- /.entry-thumbnail -->
                                         <div class="entry-content media-body">
                                             <h3 class="entry-title"><a href="#">David Braun: Chief Monster of Web Design</a></h3><!-- /.entry-thumbnail -->
                                             <div class="entry-meta"><span><i class="icon-bubble"></i> 23 Comments</span></div><!-- /.entry-meta -->
@@ -553,10 +431,10 @@
 
 
 
-    <script src="assets/js/jquery-3.3.1.min.js"></script>
-    <script src="assets/js/plugins.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/jquery.selectric.js"></script>
+    <script src="/static/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/static/assets/js/plugins.js"></script>
+    <script src="/static/assets/js/main.js"></script>
+    <script src="/static/assets/js/jquery.selectric.js"></script>
 
     <script>
         $(function() {

@@ -1,0 +1,115 @@
+﻿{% extends "education/base.html" %}
+
+{% block left %}
+
+
+<article class="post type-post format-standard">
+    <div class="entry-content media">
+        <div class="post-date">
+            <time datetime="2018-05-28"><span class="date">28</span> July</time>
+        </div><!-- /.post-date -->
+
+        <div class="content-details media-body">
+            <h3 class="entry-title">{{ article.title }}</h3><!-- /.entry-title -->
+            <div class="entry-meta">
+                <span class="author"><i class="icon-user"></i>{{ article.author }}</span><!-- /.author -->
+                <span class="tag"><i class="icon-tag"></i> {{ article.category }}</span><!-- /.tag -->
+                <span class="comments"><i class="icon-bubbles"></i> {{ article.blogcomment_set.count }} comments</span><!-- /.tag -->
+            </div><!-- /.entry-meta -->
+
+            <p>
+                {{ article.body|safe }}
+            </p>
+
+        </div><!-- /.content-details -->
+    </div><!-- /.entry-content -->
+</article><!-- /.post -->
+
+<div class="author-bio">
+    <h3 class="title">About the author</h3>
+    <div class="author-contents media">
+        <div class="author-avatar float-left"><img class="radius" src="/media/{{ article.author.img }}" alt="Avatar"></div><!-- /.author-avatar -->
+        <div class="author-details media-body">
+            <h3 class="name"><a href="{% url 'education:teachersingle' article.author.id %}">{{ article.author.username }}</a></h3>
+            <p>
+                There was a painful and uncontrollable squeaking mixed in with it, the words could be made out at first but then there was a sort of echo which made them unclear, leaving the hearer unsure whether he had heard properly or not.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="comments">
+
+    <h2 class="title">{{ article.blogcomment_set.count }} Comments</h2>
+    <ol class="comment-list" id="commitlist">
+         {% for i in article.blogcomment_set.all %}
+        <li class="comment parent">
+            <div class="comment-body media">
+                <img class="rounded-circle author-avatar" src="/media/images/comments/1.jpg" alt="Comment Authors">
+                <div class="comment-content media-body">
+                    <span class="time"><time datetime="2016-02-20 21:00"></time> {{ i.create_time }}</span>
+                    <span class="name">{{ i.name }}</span>
+                    <p class="description">
+                        {{ i.content }}
+                    </p>
+                </div><!-- /.comment-content -->
+            </div><!--/.comment-body-->
+
+        </li>
+        {% endfor %}
+    </ol><!-- /.comment-list -->
+
+
+    <div class="respond">
+        <h2 class="title" >Add Your Comment</h2>
+
+        <form action="{% url 'education:single' article.id %}" method="post" class="comment-form">
+            {% csrf_token %}
+            <input class="form-control" id="name" name="name" type="text" placeholder="Name *" required>
+            <input class="form-control" id="email" name="email" type="email" placeholder="Email *" required>
+            <input class="form-control" id="url" name="url" type="url" placeholder="URL">
+            <textarea id="comment" class="form-control" name="comment" placeholder="Comment" rows="8" required></textarea>
+            <input class="btn" type="submit" value="Submit Comment" id="btn_commit">
+        </form><!-- /.comment-form -->
+    </div><!-- /.comment-respond -->
+</div><!-- /.comment-area -->
+<script>
+    $(function(){
+        $("#btn_commit").click(function () {
+            $.ajax({
+                'url':"{% url 'education:addcomment' article.id  %}",
+                'type':"post",
+                'data':{
+                    'name':$("#name").val(),
+                    'email':$("#email").val(),
+                    'url':$("#url").val(),
+                    'content':$("#comment").val(),
+                    "csrfmiddlewaretoken":"{{ csrf_token }}",
+
+                },
+                success:function (data) {
+                    $("#name").val("")
+                    $("#email").val("")
+                    $("#url").val("")
+                    $("#content").val("")
+                    $("#commitlist").append('<li class="comment parent"> <div class="comment-body media"> <img class="rounded-circle author-avatar" src="/media/images/comments/1.jpg" alt="Comment Authors"> <div class="comment-content media-body"> <span class="time"><time datetime="2016-02-20 21:00"></time> '+data.create_time+'</span> <span class="name">'+data.name+'</span> <p class="description">'+ data.content+'</p> </div> </div> </li>')
+                }
+
+            });
+        })
+    })
+</script>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+
+
