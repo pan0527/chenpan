@@ -166,7 +166,6 @@
                                 <a class="nav-link dropdown-toggle" href="{% url 'education:courses' %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{% url 'education:courses' %}">All Courses</a>
-
                                 </div>
                             </li>
 
@@ -183,28 +182,18 @@
                                     <a class="dropdown-item" href="{% url 'education:blog' %}">Blog </a>
                                 </div>
                             </li>
+
                             <li class="nav-item menu-item-has-children dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="404.html">404 Error</a>
-                                    <a class="dropdown-item" href="about.html">About</a>
-                                    <a class="dropdown-item" href="coming-soon.html">Coming Soon</a>
-                                    <a class="dropdown-item" href="contact.html">Contact</a>
-                                    <a class="dropdown-item" href="events.html">Events</a>
-                                    <a class="dropdown-item" href="event-details.html">Event Details</a>
-                                    <a class="dropdown-item" href="faq.html">FAQ</a>
-                                    <a class="dropdown-item" href="portfolio.html">Portfolio</a>
-                                    <a class="dropdown-item" href="portfolio-single.html">Portfolio Single</a>
-                                    <a class="dropdown-item" href="login.html">Login</a>
-                                    <a class="dropdown-item" href="register.html">Register</a>
-                                    <a class="dropdown-item" href="shop.html">Shop</a>
-                                    <a class="dropdown-item" href="shop-single.html">Shop Single</a>
+                                    <a class="dropdown-item" href="{% url 'education:login' %}">Login</a>
+                                    <a class="dropdown-item" href="{% url 'education:register' %}">Register</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
-                </nav>
-
+                   </nav>
+                 </div>
             </div><!-- /.container -->
         </div><!-- /.header-bottom -->
     </header><!-- /.masthead -->

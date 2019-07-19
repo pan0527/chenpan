@@ -53,9 +53,6 @@ class Vedio(models.Model):
     def __str__(self):
         return self.title
 
-
-
-
 #课程评论
 class CourseComment(models.Model):
     title = models.CharField(max_length=10)
