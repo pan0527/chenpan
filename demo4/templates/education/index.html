@@ -33,8 +33,6 @@
     <!-- Import Template's CSS Files --> 
     <link rel="stylesheet" href="/static/assets/css/style.css">
     <link rel="stylesheet" href="/static/assets/css/responsive.css">
-
-
 </head>
 
 
@@ -163,7 +161,6 @@
                                 <a class="nav-link dropdown-toggle" href="{% url 'education:courses' %}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Courses</a>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="{% url 'education:courses' %}">All Courses</a>
-
                                 </div>
                             </li>
 
@@ -177,27 +174,15 @@
                             <li class="nav-item menu-item-has-children dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Blog</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="blog.html">Blog Posts</a>
-                                    <a class="dropdown-item" href="single.html">Blog single</a>
+                                    <a class="dropdown-item" href="{% url 'education:blog' %}">Blog </a>
                                 </div>
                             </li>
 
                             <li class="nav-item menu-item-has-children dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="404.html">404 Error</a>
-                                    <a class="dropdown-item" href="about.html">About</a>
-                                    <a class="dropdown-item" href="coming-soon.html">Coming Soon</a>
-                                    <a class="dropdown-item" href="contact.html">Contact</a>
-                                    <a class="dropdown-item" href="events.html">Events</a>
-                                    <a class="dropdown-item" href="event-details.html">Event Details</a>
-                                    <a class="dropdown-item" href="faq.html">FAQ</a>
-                                    <a class="dropdown-item" href="portfolio.html">Portfolio</a>
-                                    <a class="dropdown-item" href="portfolio-single.html">Portfolio Single</a>
-                                    <a class="dropdown-item" href="login.html">Login</a>
-                                    <a class="dropdown-item" href="register.html">Register</a>
-                                    <a class="dropdown-item" href="shop.html">Shop</a>
-                                    <a class="dropdown-item" href="shop-single.html">Shop Single</a>
+                                    <a class="dropdown-item" href="{% url 'education:login' %}">Login</a>
+                                    <a class="dropdown-item" href="{% url 'education:register' %}">Register</a>
                                 </div>
                             </li>
                         </ul>
@@ -241,120 +226,25 @@
 
                 <div class="course-items with-slider">
                     <div id="course-slider" class="course-slider owl-carousel">
+                        {% for i in courses %}
                         <div class="item">
                             <div class="item-thumb">
-                                <img src="/media/images/popular/1.jpg" alt="Item Thumbnail">
+                                <img src="/media/{{ i.img }}" alt="Item Thumbnail">
                                 <div class="avatar"><img class="rounded-circle" src="/media/images/avatar/1.png" alt="Avatar Image"></div><!-- /.avatar -->
                             </div><!-- /.item-thumb -->
                             <div class="item-details">
-                                <h3 class="item-title"><a href="course-single-01.html">Python Bootcamp: Go from zero to hero in Python</a></h3><!-- /.item-title -->
-                                <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
+                                <h3 class="item-title"><a href="{% url 'education:coursesingle' i.id %}">{{ i.name }}</a></h3><!-- /.item-title -->
+                                <span class="instructor"><a href="{% url 'education:teachersingle' i.teacher.id %}">{{ i.teacher.username }}</a></span><!-- /.instructor -->
                                 <div class="details-bottom">
-                                    <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
+                                    <div class="course-price float-left"><span class="currency">$</span><span class="price">{{ i.price }}</span></div><!-- /.course-price -->
                                     <div class="rating float-right">
                                         <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" data-fractions="2"/>
                                     </div><!-- /.rating -->
                                 </div><!-- /.details-bottom -->
-
-                                <div class="item-meta">
-                                    <span><i class="icons icon-people"></i> 129</span>
-                                    <span><i class="icons icon-clock"></i> 22Hrs</span>
-                                    <span><i class="icons icon-bubble"></i> 51</span>
-                                </div><!-- /.item-meta -->
                             </div><!-- /.item-details -->
                         </div><!-- /.item -->
+                        {% endfor %}
 
-                        <div class="item">
-                            <div class="item-thumb">
-                                <img src="/media/images/popular/2.jpg" alt="Item Thumbnail">
-                                <div class="avatar"><img class="rounded-circle" src="/media//avatar/2.png" alt="Avatar Image"></div><!-- /.avatar -->
-                            </div><!-- /.item-thumb -->
-                            <div class="item-details">
-                                <h3 class="item-title"><a href="course-single-01.html">The Complete Web Developer Bootcamp</a></h3><!-- /.item-title -->
-                                <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                <div class="details-bottom">
-                                    <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                    <div class="rating float-right">
-                                        <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" data-fractions="2"/>
-                                    </div><!-- /.rating -->
-                                </div><!-- /.details-bottom -->
-
-                                <div class="item-meta">
-                                    <span><i class="icons icon-people"></i> 129</span>
-                                    <span><i class="icons icon-clock"></i> 22Hrs</span>
-                                    <span><i class="icons icon-bubble"></i> 51</span>
-                                </div><!-- /.item-meta -->
-                            </div><!-- /.item-details -->
-                        </div><!-- /.item -->
-
-                        <div class="item">
-                            <div class="item-thumb">
-                                <img src="/media/images/popular/3.jpg" alt="Item Thumbnail">
-                                <div class="avatar"><img class="rounded-circle" src="/media/images/avatar/3.png" alt="Avatar Image"></div><!-- /.avatar -->
-                            </div><!-- /.item-thumb -->
-                            <div class="item-details">
-                                <h3 class="item-title"><a href="course-single-01.html">Complete Web Developer in 2018: Zero to Mastery</a></h3><!-- /.item-title -->
-                                <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                <div class="details-bottom">
-                                    <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                    <div class="rating float-right">
-                                        <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" data-fractions="2"/>
-                                    </div><!-- /.rating -->
-                                </div><!-- /.details-bottom -->
-
-                                <div class="item-meta">
-                                    <span><i class="icons icon-people"></i> 129</span>
-                                    <span><i class="icons icon-clock"></i> 22Hrs</span>
-                                    <span><i class="icons icon-bubble"></i> 51</span>
-                                </div><!-- /.item-meta -->
-                            </div><!-- /.item-details -->
-                        </div><!-- /.item -->
-
-                        <div class="item">
-                            <div class="item-thumb">
-                                <img src="/media/images/popular/4.jpg" alt="Item Thumbnail">
-                                <div class="avatar"><img class="rounded-circle" src="/media/images/avatar/4.png" alt="Avatar Image"></div><!-- /.avatar -->
-                            </div><!-- /.item-thumb -->
-                            <div class="item-details">
-                                <h3 class="item-title"><a href="course-single-01.html">Course On: Complete Java Masterclass</a></h3><!-- /.item-title -->
-                                <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                <div class="details-bottom">
-                                    <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                    <div class="rating float-right">
-                                        <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" data-fractions="2"/>
-                                    </div><!-- /.rating -->
-                                </div><!-- /.details-bottom -->
-
-                                <div class="item-meta">
-                                    <span><i class="icons icon-people"></i> 129</span>
-                                    <span><i class="icons icon-clock"></i> 22Hrs</span>
-                                    <span><i class="icons icon-bubble"></i> 51</span>
-                                </div><!-- /.item-meta -->
-                            </div><!-- /.item-details -->
-                        </div><!-- /.item -->
-
-                        <div class="item">
-                            <div class="item-thumb">
-                                <img src="/media/images/popular/7.jpg" alt="Item Thumbnail">
-                                <div class="avatar"><img class="rounded-circle" src="/media/images/avatar/1.png" alt="Avatar Image"></div><!-- /.avatar -->
-                            </div><!-- /.item-thumb -->
-                            <div class="item-details">
-                                <h3 class="item-title"><a href="course-single-01.html">Complete JavaScript Course 2018: Build Real Projects!</a></h3><!-- /.item-title -->
-                                <span class="instructor"><a href="#">Justin Marks</a></span><!-- /.instructor -->
-                                <div class="details-bottom">
-                                    <div class="course-price float-left"><span class="currency">$</span><span class="price">15.99</span></div><!-- /.course-price -->
-                                    <div class="rating float-right">
-                                        <input type="hidden" class="rating-tooltip-manual" data-filled="fas fa-star" data-empty="far fa-star" data-fractions="2"/>
-                                    </div><!-- /.rating -->
-                                </div><!-- /.details-bottom -->
-
-                                <div class="item-meta">
-                                    <span><i class="icons icon-people"></i> 129</span>
-                                    <span><i class="icons icon-clock"></i> 22Hrs</span>
-                                    <span><i class="icons icon-bubble"></i> 51</span>
-                                </div><!-- /.item-meta -->
-                            </div><!-- /.item-details -->
-                        </div><!-- /.item -->
                     </div><!-- /.course-slider -->
                 </div><!-- /.course-items -->
             </div><!-- /.container -->
@@ -370,7 +260,8 @@
                     <h2 class="title">Tons of Courses just <span>$10</span></h2>
                     <h3 class="sub-title">Teacher Appreciation Month</h3>
 
-                    <div id="countdown"></div>
+                    <div id="countdown">
+                    </div>
 
                     <form action="#" class="enrole-form">
                         <input type="text" name="name" class="form-control" placeholder="Name*" required>
@@ -751,8 +642,6 @@
             </div><!-- /.container -->
         </div><!-- /.section-padding -->
     </section><!-- /.subscribe -->
-
-
 
 
     <footer class="site-footer">

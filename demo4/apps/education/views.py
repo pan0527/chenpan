@@ -11,6 +11,17 @@ def getpage(request,object_list,per_num):
     page = Paginator(object_list, per_num).get_page(pagenum)
     return page
 
+# 装饰器
+def checkout(fun):
+    def check(request,*args):
+        username=request.session.get('username')
+        # print(username)
+        # if request.user and request.user.is_authenticated:
+        if username:
+            return fun(request,*args)
+        else:
+            return redirect(reverse('education:login'))
+    return check
 
 # 注册
 def register(request):
@@ -23,7 +34,6 @@ def register(request):
             user_email = request.POST.get("user_email")
             user_name = request.POST.get("user_name")
             user=Students.objects.filter(username=user_name).first()
-            print(user)
             if not user:
                 student=Students()
                 student.username=user_name
@@ -44,15 +54,16 @@ def login(request):
         username=request.POST.get("name")
         password=request.POST.get("pwd")
         user=Students.objects.filter(username=username,password=password).first()
-        print(user)
         if user:
-            return render(request,"education/index.html")
+            request.session['username']=username
+            return redirect(reverse("education:index"))
         else:
             return render(request,"education/login.html",{"error": "用户或密码错误"})
 # 首页
 def index(request):
+    courses = Course.objects.all()
 
-    return render(request, "education/index.html")
+    return render(request, "education/index.html",locals())
 # 课程
 def courses(request):
     courses=Course.objects.all()
@@ -114,14 +125,78 @@ def gettag(request,id):
         articles = tags.article_set.all()
         page = getpage(request, articles, 2)
     return render(request, "education/blog.html", {"page":page})
+# 归档
 def getfile(request,year,month):
     if request.method == "GET":
         articles = Article.objects.filter(create_time__year=year, create_time__month=month)
         page = getpage(request, articles, 2)
     return render(request, "education/blog.html", {"page":page})
+# 作者
 def getauthor(request,id):
     if request.method == "GET":
         teachers = get_object_or_404(Teachers,pk=id)
         articles = teachers.article_set.all()
         page = getpage(request, articles, 2)
     return render(request, "education/blog.html", {"page":page})
+# 视频
+@checkout
+def getvedio(request,id):
+    if request.method == "GET":
+        vedio=Vedio.objects.get(pk=id)
+        return render(request, "education/vedio.html",{'vedio':vedio})
+
+# 课程分类
+def coursecategory(request,id):
+    category = CourseCategory.objects.get(pk=id)
+    courses = category.course_set.all()
+    # print(courses,type(courses))
+    courselist = []
+    for i in courses:
+        course = {
+            'id':i.id,
+            'name':i.name,
+            'teacher':i.teacher.username,
+            'tid':i.teacher.id,
+            'img':str(i.img),
+            'price':i.price,
+        }
+        courselist.append(course)
+    # print(courselist)
+    return JsonResponse(courselist,safe=False)
+
+def allcoursecategory(request):
+    courses = Course.objects.all()
+    courselist = []
+    for i in courses:
+        course = {
+            'id': i.id,
+            'name': i.name,
+            'teacher': i.teacher.username,
+            'tid': i.teacher.id,
+            'img': str(i.img),
+            'price': i.price,
+        }
+        courselist.append(course)
+    # print(courselist)
+    return JsonResponse(courselist, safe=False)
+# 异步刷新分页
+# def getallcoursepage(request):
+#     courses = Course.objects.all()
+#     page = getpage(request, courses, 6)
+#     # print(page)
+#     courselist = []
+#     print(page.object_list,len(page.object_list))
+#     for i in page.object_list:
+#         print("+++++++++++")
+#         print(i.id)
+#         course = {
+#             'id': i.id,
+#             'name': i.name,
+#             'teacher': i.teacher.username,
+#             'tid': i.teacher.id,
+#             'img': str(i.img),
+#             'price': i.price,
+#         }
+#         # courselist.append(course)
+#     # print(courselist,len(courselist))
+#     return JsonResponse(courselist, safe=False)

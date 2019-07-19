@@ -18,6 +18,11 @@ urlpatterns=[
     url(r'^gettag/(\d+)/$',gettag,name="gettag"),
     url(r'^getfile/(\d+)/(\d+)/$',getfile,name="getfile"),
     url(r'^getauthor/(\d+)/$',getauthor,name="getauthor"),
+    url(r'^getvedio/(\d+)/$', getvedio, name="getvedio"),
+    url(r'^coursecategory/(\d+)/$',coursecategory,name="coursecategory"),
+    url(r'^allcoursecategory/$',allcoursecategory,name="allcoursecategory"),
+
+
 
 
 
